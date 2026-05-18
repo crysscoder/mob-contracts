@@ -169,7 +169,16 @@ public final class MobContractsPlugin extends JavaPlugin implements Listener, Co
     }
 
     private List<EntityType> targets() {
-        return getConfig().getStringList("targets").stream().map(value -> EntityType.valueOf(value.toUpperCase(Locale.ROOT))).toList();
+        List<EntityType> values = getConfig().getStringList("targets").stream()
+            .map(this::entityType)
+            .filter(java.util.Objects::nonNull)
+            .toList();
+
+        if (values.isEmpty()) {
+            return List.of(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.CREEPER);
+        }
+
+        return values;
     }
 
     private void reward(Player player) {
@@ -188,7 +197,23 @@ public final class MobContractsPlugin extends JavaPlugin implements Listener, Co
 
         for (String key : getConfig().getConfigurationSection("data").getKeys(false)) {
             String path = "data." + key;
-            contracts.put(UUID.fromString(key), new Contract(EntityType.valueOf(getConfig().getString(path + ".type")), getConfig().getInt(path + ".target"), getConfig().getInt(path + ".progress")));
+            try {
+                EntityType type = entityType(getConfig().getString(path + ".type", ""));
+
+                if (type != null) {
+                    contracts.put(UUID.fromString(key), new Contract(type, Math.max(1, getConfig().getInt(path + ".target")), Math.max(0, getConfig().getInt(path + ".progress"))));
+                }
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+    }
+
+    private EntityType entityType(String value) {
+        try {
+            EntityType type = EntityType.valueOf(value.toUpperCase(Locale.ROOT));
+            return type.isAlive() ? type : null;
+        } catch (IllegalArgumentException exception) {
+            return null;
         }
     }
 
