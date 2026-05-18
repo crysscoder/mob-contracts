@@ -1,0 +1,20 @@
+name: MobContracts
+version: ${version}
+main: io.github.crysscoder.mobcontracts.MobContractsPlugin
+api-version: '1.21'
+author: crysscoder
+description: Mob kill contracts with simple rewards.
+commands:
+  contracts:
+    description: Manage mob contracts.
+    usage: /contracts
+    aliases:
+      - contract
+      - mobcontracts
+permissions:
+  mobcontracts.use:
+    description: Use MobContracts.
+    default: true
+  mobcontracts.reload:
+    description: Reload MobContracts config.
+    default: op

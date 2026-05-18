@@ -1,0 +1,22 @@
+target-count: 20
+reward-exp: 150
+reward-emeralds: 4
+targets:
+  - ZOMBIE
+  - SKELETON
+  - CREEPER
+  - SPIDER
+  - ENDERMAN
+messages:
+  prefix: "&7[&aContracts&7]"
+  only-player: "%prefix% &fКоманда доступна только игроку."
+  no-permission: "%prefix% &fНет прав."
+  reloaded: "%prefix% &fКонфиг перезагружен."
+  list: "%prefix% &fЦели: &a%targets%&f."
+  taken: "%prefix% &fКонтракт взят: &a%type%&f, нужно &a%target%&f."
+  already: "%prefix% &fУ тебя уже есть контракт."
+  none: "%prefix% &fАктивного контракта нет."
+  cancelled: "%prefix% &fКонтракт отменён."
+  progress: "%prefix% &fПрогресс: &a%type% %progress%&7/&a%target%&f."
+  complete: "%prefix% &fКонтракт выполнен. Награда получена."
+  bad-target: "%prefix% &fТакой цели нет."
