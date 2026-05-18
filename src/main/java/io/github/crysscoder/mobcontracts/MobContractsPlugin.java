@@ -183,9 +183,11 @@ public final class MobContractsPlugin extends JavaPlugin implements Listener, Co
 
     private void reward(Player player) {
         player.giveExp(Math.max(0, getConfig().getInt("reward-exp", 150)));
-        int emeralds = Math.max(0, getConfig().getInt("reward-emeralds", 4));
-        if (emeralds > 0) {
-            player.getInventory().addItem(new ItemStack(Material.EMERALD, emeralds));
+        int emeralds = Math.max(0, Math.min(2304, getConfig().getInt("reward-emeralds", 4)));
+        while (emeralds > 0) {
+            int stack = Math.min(64, emeralds);
+            player.getInventory().addItem(new ItemStack(Material.EMERALD, stack)).values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
+            emeralds -= stack;
         }
     }
 
